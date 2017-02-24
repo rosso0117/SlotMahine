@@ -1,4 +1,3 @@
-# SlotMahine
-iPhoneApp Sample(4inch)
+# SlotMahine<br>
 
-スロットマシンの試作
+主食に迷った時用のスロット
