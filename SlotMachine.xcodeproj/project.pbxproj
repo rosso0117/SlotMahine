@@ -106,6 +106,7 @@
 					B1EAB7FF1CAB9AF400DCB6FD = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = 4UBW99MSX8;
+						LastSwiftMigration = 0810;
 					};
 				};
 			};
@@ -266,6 +267,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jp.ne.rosso0117.SlotMachine;
 				PRODUCT_NAME = SlotMachine;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -277,6 +279,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jp.ne.rosso0117.SlotMachine;
 				PRODUCT_NAME = SlotMachine;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

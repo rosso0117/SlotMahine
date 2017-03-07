@@ -24,7 +24,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     var startBtn: UIButton!
     var stopBtns: [UIButton]!
     
-    var timers: [NSTimer]!
+    var timers: [Timer]!
     
     var stopCount: Int = 0
     
@@ -57,7 +57,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         
         for i in 0..<foodCount {
             let slotView = UIView()
-            slotView.frame = CGRectMake(0, 0, 120, 120)
+            slotView.frame = CGRect(x: 0, y: 0, width: 120, height: 120)
             slotView.layer.masksToBounds = true
             slotView.layer.cornerRadius = 60.0
             slotView.backgroundColor = UIColor(red: 0.8, green: 1.0, blue: 1.0, alpha: 0.8)
@@ -74,10 +74,10 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         //        食べ物の画像をベースの上に配置する
         for j in 0..<foodCount {
             let foodImageView = UIImageView(image: foodImages[j])
-            foodImageView.frame = CGRectMake(0, 0, 70, 70)
+            foodImageView.frame = CGRect(x: 0, y: 0, width: 70, height: 70)
             foodImageView.layer.position = CGPoint(x: slotViews[j].bounds.width / 2,
                                                    y: slotViews[j].bounds.height / 2)
-            foodImageView.backgroundColor = UIColor.clearColor()
+            foodImageView.backgroundColor = UIColor.clear
             foodImageView.tag = j
             foodImageViews.append(foodImageView)
             self.slotViews[j].addSubview(foodImageViews[j])
@@ -87,16 +87,16 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         
         //        スタートボタン作成
         startBtn = UIButton()
-        startBtn.frame = CGRectMake(0, 0, 140, 40)
+        startBtn.frame = CGRect(x: 0, y: 0, width: 140, height: 40)
         startBtn.layer.masksToBounds = true
         startBtn.layer.cornerRadius = 20.0
         startBtn.layer.position = CGPoint(x: midXOfView , y: self.view.frame.maxY - 50)
         startBtn.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.3)
-        startBtn.tintColor = UIColor.blackColor()
-        startBtn.setTitle("START!", forState: .Normal)
-        startBtn.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        startBtn.setTitleColor(UIColor.redColor(), forState: .Disabled)
-        startBtn.addTarget(self, action: #selector(start(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        startBtn.tintColor = UIColor.black
+        startBtn.setTitle("START!", for: UIControlState())
+        startBtn.setTitleColor(UIColor.black, for: UIControlState())
+        startBtn.setTitleColor(UIColor.red, for: .disabled)
+        startBtn.addTarget(self, action: #selector(start(_:)), for: UIControlEvents.touchUpInside)
         self.view.addSubview(startBtn)
         
         //        ストップボタンを作成
@@ -104,26 +104,26 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
             
         for k in 0..<foodCount {
             let stopBtn = UIButton()
-            stopBtn.frame = CGRectMake(0, 0, 90, 30)
+            stopBtn.frame = CGRect(x: 0, y: 0, width: 90, height: 30)
             stopBtn.layer.masksToBounds = true
             stopBtn.layer.cornerRadius = 15.0
             stopBtn.layer.position = CGPoint(x: slotViews[k].frame.midX,
                                              y: slotViews[k].frame.maxY)
             stopBtn.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.8)
-            stopBtn.setTitle("STOP", forState: .Normal)
-            stopBtn.setTitleColor(UIColor.blackColor(), forState: .Normal)
-            stopBtn.setTitleColor(UIColor.redColor(), forState: .Disabled)
+            stopBtn.setTitle("STOP", for: UIControlState())
+            stopBtn.setTitleColor(UIColor.black, for: UIControlState())
+            stopBtn.setTitleColor(UIColor.red, for: .disabled)
             stopBtn.tag = k
-            stopBtn.enabled = false
+            stopBtn.isEnabled = false
             stopBtn.addTarget(self, action: #selector(stop(_:)),
-                              forControlEvents: UIControlEvents.TouchUpInside)
+                              for: UIControlEvents.touchUpInside)
             stopBtns.append(stopBtn)
             self.view.addSubview(stopBtns[k])
         }
         
         //        結果表示のベースビューを作成
         resultView = UIView()
-        resultView.frame = CGRectMake(0, 0, 200, 100)
+        resultView.frame = CGRect(x: 0, y: 0, width: 200, height: 100)
         resultView.layer.position = CGPoint(x: midXOfView, y: startBtn.frame.minY - 90)
         resultView.layer.masksToBounds = true
         resultView.layer.cornerRadius = 20.0
@@ -132,66 +132,66 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         
         //        結果表示右上のアイコン部分を作成
         resultImageView = UIImageView()
-        resultImageView.frame = CGRectMake(0, 0, 50, 50)
+        resultImageView.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
         resultImageView.layer.position = CGPoint(x: resultView.frame.minX,
                                                  y: resultView.frame.minY)
         resultImageView.layer.masksToBounds = true
         resultImageView.layer.cornerRadius = 25.0
-        resultImageView.backgroundColor = UIColor.whiteColor()
+        resultImageView.backgroundColor = UIColor.white
 //        resultImageView.image = foodImages[0]
-        resultImageView.contentMode = UIViewContentMode.ScaleAspectFit
+        resultImageView.contentMode = UIViewContentMode.scaleAspectFit
         self.view.addSubview(resultImageView)
         
         //        結果表示の文字部分を作成
         resultLabel = UILabel()
-        resultLabel.frame = CGRectMake(0, 0, 120, 60)
+        resultLabel.frame = CGRect(x: 0, y: 0, width: 120, height: 60)
         resultLabel.layer.position = CGPoint(x: resultView.bounds.width / 2,
                                              y: resultView.bounds.height / 2)
-        resultLabel.font = UIFont.boldSystemFontOfSize(24)
-        resultLabel.backgroundColor = UIColor.clearColor()
-        resultLabel.textColor = UIColor.blackColor()
+        resultLabel.font = UIFont.boldSystemFont(ofSize: 24)
+        resultLabel.backgroundColor = UIColor.clear
+        resultLabel.textColor = UIColor.black
         resultLabel.text = ""
-        resultLabel.textAlignment = NSTextAlignment.Center
+        resultLabel.textAlignment = NSTextAlignment.center
         self.resultView.addSubview(resultLabel)
         
 //        オーディオ設定
-        let stopAudioFilePath: NSString = NSBundle.mainBundle().pathForResource("decision3", ofType: "mp3")!
-        let stopAudioFileURL:NSURL = NSURL(fileURLWithPath: stopAudioFilePath as String)
+        let stopAudioFilePath: NSString = Bundle.main.path(forResource: "decision3", ofType: "mp3")! as NSString
+        let stopAudioFileURL:URL = URL(fileURLWithPath: stopAudioFilePath as String)
         do {
-            try stopSound = AVAudioPlayer(contentsOfURL: stopAudioFileURL)
+            try stopSound = AVAudioPlayer(contentsOf: stopAudioFileURL)
         } catch let error as NSError {
             print(error)
         }
         stopSound.delegate = self
         
-        let successAudioFilePath = NSBundle.mainBundle().pathForResource("decision4", ofType: "mp3")!
-        let successAudioFileURL = NSURL(fileURLWithPath: successAudioFilePath)
+        let successAudioFilePath = Bundle.main.path(forResource: "decision4", ofType: "mp3")!
+        let successAudioFileURL = URL(fileURLWithPath: successAudioFilePath)
         do {
-            try successSound = AVAudioPlayer(contentsOfURL: successAudioFileURL)
+            try successSound = AVAudioPlayer(contentsOf: successAudioFileURL)
         } catch let error as NSError {
             print(error)
         }
         successSound.delegate = self
     }
     
-    func start(sender: UIButton) {
-        if startBtn.enabled {
+    func start(_ sender: UIButton) {
+        if startBtn.isEnabled {
             for i in 0 ..< foodCount {
-                stopBtns[i].enabled = true
+                stopBtns[i].isEnabled = true
             }
             shuffle()
         }
         stopCount = 0
-        startBtn.enabled = false
+        startBtn.isEnabled = false
         resultLabel.text = ""
         resultImageView.image = nil
         
     }
     
     func shuffle() {
-        let timer0 = NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: #selector(shuffleImages0), userInfo: nil, repeats: true)
-        let timer1 = NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: #selector(shuffleImages1), userInfo: nil, repeats: true)
-        let timer2 = NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: #selector(shuffleImages2), userInfo: nil, repeats: true)
+        let timer0 = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(shuffleImages0), userInfo: nil, repeats: true)
+        let timer1 = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(shuffleImages1), userInfo: nil, repeats: true)
+        let timer2 = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(shuffleImages2), userInfo: nil, repeats: true)
         timers.append(timer0)
         timers.append(timer1)
         timers.append(timer2)
@@ -211,14 +211,14 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         foodImageViews[2].image = foodImages[rnd]
     }
     
-    func stop(sender: UIButton) {
-        if stopSound.playing {
+    func stop(_ sender: UIButton) {
+        if stopSound.isPlaying {
             stopSound.stop()
         }
-        if startBtn.enabled {
+        if startBtn.isEnabled {
             return
         }
-        sender.enabled = false
+        sender.isEnabled = false
         timers[sender.tag].invalidate()
         stopCount += 1
         stopSound.play()
@@ -229,17 +229,17 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     }
     
     func allslotStopped () {
-        startBtn.enabled = true
+        startBtn.isEnabled = true
         timers = []
-        print(startBtn.enabled)
+        print(startBtn.isEnabled)
         for i in 0 ..< stopBtns.count {
-            print(stopBtns[i].enabled)
+            print(stopBtns[i].isEnabled)
         }
         print(timers)
         let result0 = foodImageViews[0].image
         let result1 = foodImageViews[1].image
         let result2 = foodImageViews[2].image
-        if result0 == result1 && result1 == result2 && result0 == result0 {
+        if result0 == result1 && result1 == result2 && result2 == result0 {
             resultImageView.image = result0
             resultLabel.text = "あたり"
             successSound.play()
